@@ -62,3 +62,6 @@ typings/
 
 #todo
 todo.txt
+
+#vscode settings
+.vscode
