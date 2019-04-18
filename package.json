@@ -1,0 +1,19 @@
+{
+  "name": "scanwifi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hugo Larrousse",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "node-wifi": "^2.0.5",
+    "request": "^2.88.0",
+    "requestretry": "^4.0.0"
+  }
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  .password {
+    display: none;
+  }
+  img {
+    width: 15px;
+  }
+  #error{
+    color: red;
+  }
+  </style>
+</head>
+<body>
+
+<h2>Connect your Raspberry Pi to internet</h2>
+
+<form>
+  SSID:<br>
+  <select id="ssid" onchange="displayPassword(this)"></select>
+  <img src="./reload.png" onclick="initialize()">
+  <br>
+  <div id="passwordDiv" class="password">
+    PASSWORD<br>
+    <input id="password" type="password" name="lastname" >
+  </div>
+  <br><br>
+  <input type="submit" value="Submit" onclick="sendCredentials()">
+</form> 
+<p id="error"></p>
+<p id="message">If you click the "Submit" button, we will try to connect the raspberry pi with these credentials</p>
+
+</body>
+</html>
+
+<script>
+
+const postCredentials = async (networkParse) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  var myInit = {
+    method: 'POST',
+    body: JSON.stringify(networkParse),
+    headers: {'Content-Type': 'application/json'}
+  }
+  const fetchResult = fetch('http://172.24.1.1:3000/credentials', myInit)
+  const response = await fetchResult;
+  const responseJSON = await response.json();
+  const message = document.getElementById("message");
+  message.innerHTML = responseJSON.message
+}
+
+const sendCredentials = () => {
+  event.preventDefault();
+  const password = document.getElementById("password");
+  const ssid = document.getElementById("ssid");
+  const error = document.getElementById("error");
+  const networkParse = JSON.parse(ssid.value);
+  if(networkParse && networkParse.needPassword && !password.value) {
+    error.innerHTML = 'Error, need password';
+  } else {
+    error.innerHTML = '';
+  }
+  networkParse.password = password.value;
+  postCredentials(networkParse)
+}
+
+const displayPassword = ({ value }) => {
+  const network = JSON.parse(value);
+  var passwordDiv = document.getElementById("passwordDiv");
+  const password = document.getElementById("password");
+  password.value = null;
+  passwordDiv.style.display = !network.needPassword ? 'none' : 'contents';
+}
+
+const assignNetworks = (networks) => {
+  var select = document.getElementById("ssid");
+  while (select.firstChild) {
+    select.removeChild(select.firstChild);
+  }
+  for (const network of networks) {
+    var el = document.createElement("option");
+    if(network.ssid) {
+      el.textContent = network.ssid;
+      el.value = JSON.stringify(network);
+      select.appendChild(el);
+    }
+  }
+}
+
+async function initialize() {
+  const URL = `http://172.24.1.1:3000/network`;
+  const fetchResult = fetch(URL)
+  const response = await fetchResult;
+  const networks = await response.json();
+  console.log(networks);
+  if(networks) {
+    assignNetworks(networks)
+    displayPassword({value: JSON.stringify(networks[0]) });
+  }
+}
+
+initialize()
+
+// fetch('https://www.reddit.com/r/javascript/top/.json?limit=5')
+// .then(res => res.json())
+// .then(json => console.log(json));
+
+// fetch('htpp://172.24.1.1:3000',myInit)
+// .then(function(response) {
+//   console.log('response :', response);
+//   return response.blob();
+// })
+// .then(function(myBlob) {
+//   console.log('my :', my);
+//   var objectURL = URL.createObjectURL(myBlob);
+//   myImage.src = objectURL;
+// });
+</script>

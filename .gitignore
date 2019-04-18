@@ -65,3 +65,6 @@ todo.txt
 
 #vscode settings
 .vscode
+
+#package-lock
+package-lock.json
