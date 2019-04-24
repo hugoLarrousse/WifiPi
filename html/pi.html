@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  body {
+    height: 100%;
+    width: 100%;
+    background: blue;
+  }
+  </style>
+</head>
+<body>
+
+<h1>Heptaward</h1>
+<p id="message"> ... </p>
+<p id="code"></p>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const message = {
+    waitingParing: 'Connectez-vous sur app.heptaward.com, ajoutez un nouveau pi Heptaward dans la partie TV management',
+    paired: 'Vous êtes maintenant connecté au pi Heptaward!',
+    connection: 'Nous connectons le pi Heptaward a internet...',
+    connected: 'Le pi Heptaward est maintenant connecté à Internet!',
+    errorConnection: 'Il y a eu une erreur au moment de connecter le pi a internet, veuillez rééssayer',
+  }
+  const messageElement = document.getElementById('message');
+  var socket = io();
+  console.log('JJJ');
+  
+  socket.on('message', messageReceived => {
+    console.log('messageReceived', messageReceived);
+    messageElement.innerHTML = message[messageReceived] || '...';
+  })
+</script>
+</body>
+</html>
