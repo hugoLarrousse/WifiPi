@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cli = require('./src/index');
 
 const app = express();
 const server = require('http').createServer(app); //eslint-disable-line
+exports.io = require('socket.io')(server);
+
+const cli = require('./src/index');
+
 
 cli.initialize();
 
@@ -28,29 +31,38 @@ app.use(bodyParser.json());
 
 app.post('/credentials', async (req, res) => {
   try {
+    cli.notifyPi('connection');
     const { ssid, mac, password } = req.body;
     if (!ssid || !mac) {
-      res.status(400).send({ error: true, message: 'body incomplete' });
-    } else {
-      res.status(200).send({ message: 'ok' });
+      return res.status(400).send({ error: true, message: 'body incomplete' });
     }
+
+    res.status(200).send({ message: 'ok' });
+    cli.notifyPi('connection');
     await cli.addNetworkToConfigFile(ssid, password);
+    return 1;
   } catch (e) {
-    console.log('credentails errors', e.message);
+    console.log('credentials errors', e.message);
+    return 1;
   }
 });
 
 app.get('/network', (req, res) => {
   const networks = cli.getNetworks();
+  cli.notifyPi('paired');
   res.status(networks ? 200 : 400).send(networks || { message: 'error' });
 });
 
+app.get('/pi/pair', (req, res) => {
+  res.sendFile('html/pi.html', { root: __dirname });
+  cli.notifyPi('waitingParing');
+});
+
 app.all('/*', (req, res) => {
-  // Just send the index.html for other files to support HTML5Mode
-  res.sendFile('index.html', { root: __dirname });
+  res.sendFile('html/network.html', { root: __dirname });
 });
 
 
-server.listen(3000, () => {
+server.listen(3001, () => {
   console.log('ScanWifi API is running on port 3000');
 });

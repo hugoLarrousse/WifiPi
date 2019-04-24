@@ -57,7 +57,6 @@ exports.internet = async (ms, maxCount) => {
     try {
       const response = await Promise.race([request({ url: 'https://api.heptaward.com/status', json: true }), timeout(ms || 8000)]);
       if (response && response.body) {
-        console.log('response.body :', response.body);
         hasResponse = response.body === 'OK';
       }
     } catch (e) {

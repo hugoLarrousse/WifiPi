@@ -4,6 +4,16 @@ const check = require('./checkConnect');
 const timeout = require('./utils');
 const networks = require('./networks');
 const heptaward = require('./heptaward');
+const socket = require('../socket');
+
+const notifyPi = async (...messages) => {
+  for (const message of messages) {
+    socket.sendMessage(message);
+    if (messages.length > 1) {
+      await timeout(5000);
+    }
+  }
+};
 
 
 exports.addNetworkToConfigFile = async (ssid, password) => {
@@ -17,21 +27,23 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
   const hasInet = await check.inet(8);
   if (!hasInet) {
     await accessPoint.restart();
+    await notifyPi('errorConnection', 'waitingPairing');
   } else {
     const hasInternet = await check.internet(7000);
     if (hasInternet) {
+      await notifyPi('connected');
       heptaward.launchChromium();
       // send info to core + getinfo + connect to h7 + socket or connect castApp for socket?
       //
     } else {
       await accessPoint.restart();
+      await notifyPi('errorConnection', 'waitingPairing');
     }
   }
 };
 
 exports.initialize = async () => {
   const hasInternet = await check.internet(6000, 2);
-
   if (hasInternet) {
     heptaward.launchChromium();
     // send info to core + getinfo + connect to h7 + socket or connect castApp for socket?
@@ -46,4 +58,6 @@ exports.initialize = async () => {
   }
 };
 
+
 exports.getNetworks = networks.getNetworks();
+exports.notifyPi = notifyPi;

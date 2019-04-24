@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <style>
-  .password {
-    display: none;
-  }
-  img {
-    width: 15px;
-  }
-  #error{
-    color: red;
-  }
+    .password {
+      display: none;
+    }
+
+    img {
+      width: 15px;
+    }
+
+    #error {
+      color: red;
+    }
   </style>
 </head>
+
 <body>
 
-<h2>Connect your Raspberry Pi to internet</h2>
+  <h2>Connect your Raspberry Pi to internet</h2>
 
-<form>
-  SSID:<br>
-  <select id="ssid" onchange="displayPassword(this)"></select>
-  <img src="./reload.png" onclick="initialize()">
-  <br>
-  <div id="passwordDiv" class="password">
-    PASSWORD<br>
-    <input id="password" type="password" name="lastname" >
-  </div>
-  <br><br>
-  <input type="submit" value="Submit" onclick="sendCredentials()">
-</form> 
-<p id="error"></p>
-<p id="message">If you click the "Submit" button, we will try to connect the raspberry pi with these credentials</p>
+  <form>
+    SSID:<br>
+    <select id="ssid" onchange="displayPassword(this)"></select>
+    <img src="./reload.png" onclick="initialize()">
+    <br>
+    <div id="passwordDiv" class="password">
+      PASSWORD<br>
+      <input id="password" type="password" name="lastname">
+    </div>
+    <br><br>
+    <input type="submit" value="Submit" onclick="sendCredentials()">
+  </form>
+  <p id="error"></p>
+  <p id="message">If you click the "Submit" button, we will try to connect the raspberry pi with these credentials</p>
 
 </body>
+
 </html>
 
 <script>
