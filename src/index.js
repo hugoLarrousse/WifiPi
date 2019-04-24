@@ -3,8 +3,9 @@ const supplicant = require('./supplicant');
 const check = require('./checkConnect');
 const timeout = require('./utils');
 const networks = require('./networks');
-const heptaward = require('./heptaward');
+const chromium = require('./chromium');
 const socket = require('../socket');
+const heptaward = require('./heptaward');
 
 const notifyPi = async (...messages) => {
   for (const message of messages) {
@@ -32,7 +33,12 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
     const hasInternet = await check.internet(7000);
     if (hasInternet) {
       await notifyPi('connected');
-      heptaward.launchChromium();
+      const deviceId = await heptaward.activePi();
+      if (!deviceId) {
+        await notifyPi('errorSerial');
+      } else {
+        chromium.launchCast(deviceId);
+      }
       // send info to core + getinfo + connect to h7 + socket or connect castApp for socket?
       //
     } else {
@@ -45,7 +51,14 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
 exports.initialize = async () => {
   const hasInternet = await check.internet(6000, 2);
   if (hasInternet) {
-    heptaward.launchChromium();
+    const deviceId = await heptaward.activePi();
+    if (!deviceId) {
+      await chromium.launchPiDisplay();
+      await timeout(2000);
+      await notifyPi('errorSerial');
+    } else {
+      chromium.launchCast(deviceId);
+    }
     // send info to core + getinfo + connect to h7 + socket or connect castApp for socket?
     //
   } else {
