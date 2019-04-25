@@ -49,12 +49,17 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
 };
 
 exports.initialize = async () => {
-  const hasInternet = await check.internet(6000, 2);
+  await chromium.launchPiDisplay();
+  await timeout(2000);
+  await notifyPi('lookingforInternet');
+  let hasInternet = await check.internet(7000, 2);
+  if (!hasInternet) {
+    await accessPoint.stop();
+    hasInternet = await check.internet(15000, 2);
+  }
   if (hasInternet) {
     const deviceId = await heptaward.activePi();
     if (!deviceId) {
-      await chromium.launchPiDisplay();
-      await timeout(2000);
       await notifyPi('errorSerial');
     } else {
       chromium.launchCast(deviceId);
@@ -62,6 +67,7 @@ exports.initialize = async () => {
     // send info to core + getinfo + connect to h7 + socket or connect castApp for socket?
     //
   } else {
+    await notifyPi('waitingPairing');
     networks.setNetworks(await networks.scan() || []);
     if (networks.getNetworks().length === 0) {
       await accessPoint.stop();
