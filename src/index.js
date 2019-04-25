@@ -49,9 +49,7 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
 };
 
 exports.initialize = async () => {
-  await chromium.launchPiDisplay();
-  await timeout(2000);
-  await notifyPi('lookingforInternet');
+  chromium.launchPiDisplay();
   let hasInternet = await check.internet(7000, 2);
   if (!hasInternet) {
     await accessPoint.stop();
@@ -77,6 +75,5 @@ exports.initialize = async () => {
   }
 };
 
-
-exports.getNetworks = networks.getNetworks();
+exports.getNetworks = () => networks.getNetworks();
 exports.notifyPi = notifyPi;
