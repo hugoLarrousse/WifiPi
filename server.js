@@ -10,13 +10,6 @@ const cli = require('./src/index');
 
 cli.initialize();
 
-// const chromium = require('chromium');
-// const {execFile} = require('child_process');
-
-// execFile(chromium.path, ['https://google.com'], err => {
-//    console.log('Hello Google!');
-// });
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -55,7 +48,7 @@ app.get('/network', (req, res) => {
 
 app.get('/pi/pair', (req, res) => {
   res.sendFile('html/pi.html', { root: __dirname });
-  cli.notifyPi('waitingParing');
+  cli.notifyPi('lookingForInternet');
 });
 
 app.all('/*', (req, res) => {
@@ -63,6 +56,6 @@ app.all('/*', (req, res) => {
 });
 
 
-server.listen(3001, () => {
+server.listen(3000, () => {
   console.log('ScanWifi API is running on port 3000');
 });
