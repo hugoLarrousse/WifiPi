@@ -10,7 +10,7 @@ exports.launchCast = async (deviceId) => {
 };
 
 exports.launchPiDisplay = async () => {
-  const { stderr } = await exec('chromium-browser --start-fullscreen ~/Desktop/WifiPi/html/pi.html');
+  const { stderr } = await exec('chromium-browser --start-fullscreen http://localhost:3001/pi/pair');
   if (stderr) {
     console.log(stderr);
   }
