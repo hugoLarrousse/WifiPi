@@ -28,10 +28,8 @@
   }
   const messageElement = document.getElementById('message');
   var socket = io();
-  console.log('JJJ');
-  
+
   socket.on('message', messageReceived => {
-    console.log('messageReceived', messageReceived);
     messageElement.innerHTML = message[messageReceived] || '...';
   })
 </script>
