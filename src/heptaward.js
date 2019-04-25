@@ -6,7 +6,7 @@ const getSerial = async () => {
   try {
     const { stderr, stdout } = await exec("cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2");
     if (stderr) throw new Error(stderr);
-    return stdout;
+    return stdout.trim();
   } catch (e) {
     console.log('error', e.message);
     return null;
