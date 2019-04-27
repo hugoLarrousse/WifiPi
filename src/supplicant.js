@@ -26,7 +26,7 @@ exports.addNetwork = async (ssid, password) => {
   const logger = fs.createWriteStream('/etc/wpa_supplicant/wpa_supplicant.conf', {
     flags: 'a', // 'a' means appending (old data will be preserved)
   });
-  logger.write(`\nnetwork={\n\tssid="${ssid}"\n\t${password ? `psk="${password}"` : 'key_mgmt=NONE'}\n}\n`); // append string to your file
+  logger.write(`\nnetwork={\n\tssid="${ssid}"\n\t${password ? `psk="${password}"\n\tkey_mgmt=WPA-PSK` : 'key_mgmt=NONE'}\n}\n`);
   logger.end();
 };
 
