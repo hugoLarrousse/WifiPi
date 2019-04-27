@@ -3,7 +3,8 @@ const exec = util.promisify(require('child_process').exec);
 
 
 exports.launchCast = async (deviceId) => {
-  const { stderr } = await exec(`chromium-browser --start-fullscreen --new-window https://cast.heptaward.com/tv/${deviceId}`);
+  // const { stderr } = await exec(`chromium-browser --start-fullscreen --new-window https://cast.heptaward.com/tv/${deviceId}`);
+  const { stderr } = await exec(`chromium-browser --start-fullscreen --new-window https://cast.staging.heptaward.com/tv/${deviceId}`);
   if (stderr) {
     console.log(stderr);
   }
