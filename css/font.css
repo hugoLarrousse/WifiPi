@@ -1,0 +1,62 @@
+@font-face {
+  font-family: "Exo";
+  src: url("../fonts/Exo/Exo-SemiBold.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/Exo/Exo-SemiBold.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../fonts/Exo/Exo-SemiBold.otf") format("opentype"), /* Open Type Font */
+  url("../fonts/Exo/Exo-SemiBold.svg") format("svg"), /* Legacy iOS */
+  url("../fonts/Exo/Exo-SemiBold.ttf") format("truetype"), /* Safari, Android, iOS */
+  url("../fonts/Exo/Exo-SemiBold.woff") format("woff"), /* Modern Browsers */
+  url("../fonts/Exo/Exo-SemiBold.woff2") format("woff2");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "Exo-Thin";
+  src: url("../fonts/Exo/Exo-Thin.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/Exo/Exo-Thin.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../fonts/Exo/Exo-Thin.otf") format("opentype"), /* Open Type Font */
+  url("../fonts/Exo/Exo-Thin.svg") format("svg"), /* Legacy iOS */
+  url("../fonts/Exo/Exo-Thin.ttf") format("truetype"), /* Safari, Android, iOS */
+  url("../fonts/Exo/Exo-Thin.woff") format("woff"), /* Modern Browsers */
+  url("../fonts/Exo/Exo-Thin.woff2") format("woff2");
+  /* Modern Browsers */
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Signika";
+  src: url("../fonts/Signika/Signika-Regular.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/Signika/Signika-Regular.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../fonts/Signika/Signika-Regular.otf") format("opentype"), /* Open Type Font */
+  url("../fonts/Signika/Signika-Regular.svg") format("svg"), /* Legacy iOS */
+  url("../fonts/Signika/Signika-Regular.ttf") format("truetype"), /* Safari, Android, iOS */
+  url("../fonts/Signika/Signika-Regular.woff") format("woff"), /* Modern Browsers */
+  url("../fonts/Signika/Signika-Regular.woff2") format("woff2");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "Signika-Semibold";
+  src: url("../fonts/Signika/Signika-Semibold.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/Signika/Signika-Semibold.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../fonts/Signika/Signika-Semibold.otf") format("opentype"), /* Open Type Font */
+  url("../fonts/Signika/Signika-Semibold.svg") format("svg"), /* Legacy iOS */
+  url("../fonts/Signika/Signika-Semibold.ttf") format("truetype"), /* Safari, Android, iOS */
+  url("../fonts/Signika/Signika-Semibold.woff") format("woff"), /* Modern Browsers */
+  url("../fonts/Signika/Signika-Semibold.woff2") format("woff2");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "Signika-Light";
+  src: url("../fonts/Signika/Signika-Light.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/Signika/Signika-Light.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../fonts/Signika/Signika-Light.otf") format("opentype"), /* Open Type Font */
+  url("../fonts/Signika/Signika-Light.svg") format("svg"), /* Legacy iOS */
+  url("../fonts/Signika/Signika-Light.ttf") format("truetype"), /* Safari, Android, iOS */
+  url("../fonts/Signika/Signika-Light.woff") format("woff"), /* Modern Browsers */
+  url("../fonts/Signika/Signika-Light.woff2") format("woff2");
+  /* Modern Browsers */
+  font-weight: bold;
+}

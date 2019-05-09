@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-  body {
-    height: 100%;
-    width: 100%;
-    background: blue;
-  }
-  </style>
+    <link rel="stylesheet" href="../css/pi.css">
 </head>
-<body>
+<body scroll="no" style="overflow: hidden">
 
-<h1>Heptaward</h1>
-<p id="message"> ... </p>
-<p id="code"></p>
+  <div class="pi-container">
+      <img class="pi-img" src="../img/heptaward.png">
+      <div class="pi-title">Heptaward</div>
+      <div class="footer-container">
+          <div class="footer-message" id="message"> En attente de pairage </div>
+          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+      </div>
+  </div>
+
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
