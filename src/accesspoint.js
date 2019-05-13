@@ -3,7 +3,7 @@ const exec = util.promisify(require('child_process').exec);
 
 exports.stop = async () => {
   try {
-    const { stderr } = await exec('bash ./conf_file/accessPoint_stop.conf');
+    const { stderr } = await exec('bash /home/pi/Desktop/WifiPi/conf_file/accessPoint_stop.conf');
     if (stderr) {
       console.log('stopAcceessPoint stderr', stderr);
     }
@@ -13,7 +13,7 @@ exports.stop = async () => {
 };
 
 exports.restart = async () => {
-  const { stderr } = await exec('bash ./conf_file/accessPoint_restart.conf');
+  const { stderr } = await exec('bash /home/pi/Desktop/WifiPi/conf_file/accessPoint_restart.conf');
   if (stderr) {
     console.log(stderr);
   }

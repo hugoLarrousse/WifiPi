@@ -14,7 +14,7 @@ exports.setChmod = async () => {
 
 exports.copyPaste = async () => {
   try {
-    const { stderr } = await exec('cp ../conf_file/wpa_supplicant.conf.orig /etc/wpa_supplicant/wpa_supplicant.conf');
+    const { stderr } = await exec('cp /home/pi/Desktop/WifiPi/conf_file/wpa_supplicant.conf.orig /etc/wpa_supplicant/wpa_supplicant.conf');
     if (stderr) throw new Error(stderr);
     return;
   } catch (e) {
