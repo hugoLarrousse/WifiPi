@@ -1,8 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 const app = express();
-const server = require('http').createServer(app); //eslint-disable-line
+const server = require('https').createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert'),
+}, app);
 exports.io = require('socket.io')(server);
 
 const cli = require('./src/index');
@@ -56,6 +60,6 @@ app.all('/*', (req, res) => {
 });
 
 
-server.listen(3000, () => {
-  console.log('WifiPi API is running on port 3000');
+server.listen(443, () => {
+  console.log('WifiPi API is running on port 443');
 });
