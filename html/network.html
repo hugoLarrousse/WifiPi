@@ -39,7 +39,6 @@ const postCredentials = async (networkParse) => {
 
 const sendCredentials = () => {
   event.preventDefault();
-  return window.close();
   const password = document.getElementById("password");
   const ssid = document.getElementById("ssid");
   const error = document.getElementById("error");
@@ -56,7 +55,7 @@ const sendCredentials = () => {
   error.style.display = 'none';
   form.style.display = 'none';
   postCredentials(networkParse);
-  window.close();
+  return window.close();
 }
 
 const displayPassword = ({ value }) => {
