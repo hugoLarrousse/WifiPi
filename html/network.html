@@ -6,6 +6,7 @@
 </head>
 
 <body>
+  <div class="company-title"> Heptaward </div>
   <form id="form">
     <div class="select-title"> SSID </div>
     <select id="ssid" onchange="displayPassword(this)"></select>
@@ -38,6 +39,7 @@ const postCredentials = async (networkParse) => {
 
 const sendCredentials = () => {
   event.preventDefault();
+  return window.close();
   const password = document.getElementById("password");
   const ssid = document.getElementById("ssid");
   const error = document.getElementById("error");
@@ -53,10 +55,8 @@ const sendCredentials = () => {
   const form = document.getElementById("form");
   error.style.display = 'none';
   form.style.display = 'none';
-  setTimeout(() => {
-    message.innerHTML = 'Please go to the next step';
-  }, 1800)
-  postCredentials(networkParse)
+  postCredentials(networkParse);
+  window.close();
 }
 
 const displayPassword = ({ value }) => {

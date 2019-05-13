@@ -1,7 +1,25 @@
 @import './font.css';
 
-* {
+html {
+  height: 98%;
+  width: 99%;
+  background: #024766;
+}
+
+body {
   font-family: 'Signika', sans-serif;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.company-title {
+  color: white;
+  font-size: 2rem;
+  margin: 0 0 10px 0;
 }
 
 form {
@@ -10,6 +28,10 @@ form {
   display: flex;
   flex-flow: column;
   width: fit-content;
+  min-width: 300px;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
 }
 
 .select-title {
