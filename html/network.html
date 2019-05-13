@@ -43,19 +43,18 @@ const sendCredentials = () => {
   const ssid = document.getElementById("ssid");
   const error = document.getElementById("error");
   error.innerHTML = 'Error, need password';
-  // const networkParse = JSON.parse(ssid.value);
-  // if(networkParse && networkParse.needPassword && !password.value) {
-  //   error.innerHTML = 'Error, need password';
-  // } else {
-  //   error.innerHTML = '';
-  // }
-  // networkParse.password = password.value;
-  const message = document.getElementById("message");
-  const form = document.getElementById("form");
+  const networkParse = JSON.parse(ssid.value);
+  if(networkParse && networkParse.needPassword && !password.value) {
+    error.innerHTML = 'Error, need password';
+  } else {
+    error.innerHTML = '';
+  }
+  networkParse.password = password.value;
   error.style.display = 'none';
-  form.style.display = 'none';
   postCredentials(networkParse);
-  return window.close();
+  setTimeout(() => {
+    window.close();
+  }, 1000)
 }
 
 const displayPassword = ({ value }) => {

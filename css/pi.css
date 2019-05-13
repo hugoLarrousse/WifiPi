@@ -1,5 +1,10 @@
 @import './font.css';
 
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   font-family: 'Signika', sans-serif;
   height: 100%;
