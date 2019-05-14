@@ -16,9 +16,9 @@ const getSerial = async () => {
 exports.activePi = async () => {
   try {
     const serial = await getSerial();
-    // const response = await request.post({ url: 'https://api.heptaward.com/tvManagement/device/activate', json: true, form: { deviceId: 'aaa' } });
+    const response = await request.post({ url: 'https://api.heptaward.com/tvManagement/device/activate', json: true, form: { serial } });
     // const response = await request.post({ url: 'http://localhost:3333/tvManagement/device/activate', json: true, form: { serial } });
-    const response = await request.post({ url: 'https://awsh7api.heptaward.com/tvManagement/device/activate', json: true, form: { serial } });
+    // const response = await request.post({ url: 'https://awsh7api.heptaward.com/tvManagement/device/activate', json: true, form: { serial } });
     if (response && response.body && response.body.hashToken) {
       return response.body.hashToken;
     }
