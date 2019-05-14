@@ -48,7 +48,9 @@ app.get('/network', (req, res) => {
 
 app.get('/pi/pair', (req, res) => {
   res.sendFile('html/pi.html', { root: __dirname });
-  cli.notifyPi('lookingForInternet');
+  setTimeout(() => {
+    cli.notifyPi('lookingForInternet');
+  }, 2000);
 });
 
 app.all('/*', (req, res) => {
