@@ -50,10 +50,10 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
 
 exports.initialize = async () => {
   chromium.launchPiDisplay();
-  let hasInternet = await check.internet(7000, 2);
+  let hasInternet = await check.internet(18000, 2);
   if (!hasInternet) {
     await accessPoint.stop();
-    hasInternet = await check.internet(15000, 2);
+    hasInternet = await check.internet(18000, 2);
   }
   if (hasInternet) {
     const deviceId = await heptaward.activePi();
