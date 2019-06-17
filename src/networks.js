@@ -51,9 +51,6 @@ exports.scan = async () => {
     } else {
       return parseOutput(stdout);
     }
-    // const networks = await wifi.scan();
-    // console.log('networks :', networks);
-    // return serializeNetworks(networks);
   } catch (e) {
     console.log('e.message :', e.message);
     return null;
