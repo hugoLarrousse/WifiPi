@@ -18,6 +18,7 @@ body {
   align-items: center;
   height: 100%;
   width: 100%;
+  justify-content: center;
 }
 
 .pi-img {
@@ -31,7 +32,7 @@ body {
   color: white;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
-  margin: 20px 0 0 0;
+  margin: 20px 0 55px 0;
 }
 
 .footer-container {
@@ -51,6 +52,7 @@ body {
   width: fit-content;
   color: #024766;
   margin: 0 10px 0 0;
+  text-align: center;
 }
 
 .lds-ring {
