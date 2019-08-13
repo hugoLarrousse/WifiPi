@@ -39,8 +39,6 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
       } else {
         chromium.launchCast(deviceId);
       }
-      // send info to core + getinfo + connect to h7 + socket or connect castApp for socket?
-      //
     } else {
       await accessPoint.restart();
       await notifyPi('errorConnection', 'waitingPairing');
@@ -49,19 +47,21 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
 };
 
 const firstConnection = async () => {
-  await notifyPi('waitingPairing');
   networks.setNetworks(await networks.scan() || []);
   if (networks.getNetworks().length === 0) {
     await accessPoint.stop();
     networks.setNetworks(await networks.scan() || []);
   }
   await accessPoint.restart();
+  await timeout(2000);
+  await notifyPi('waitingPairing');
 };
 
 exports.initialize = async () => {
   const wpaSSID = await supplicant.hasWpa();
   chromium.launchPiDisplay();
   if (!wpaSSID) {
+    await timeout(10000);
     await firstConnection();
     return;
   }
@@ -71,6 +71,7 @@ exports.initialize = async () => {
   await accessPoint.stop();
   await timeout(1000);
   let hasInternet = await check.internet(25000, 2);
+
   if (!hasInternet) {
     const networksScanned = await networks.scan();
     if (networksScanned && !networksScanned.find(n => n.ssid === wpaSSID)) {
