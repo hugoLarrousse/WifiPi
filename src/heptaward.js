@@ -8,7 +8,7 @@ const getSerial = async () => {
     if (stderr) throw new Error(stderr);
     return stdout.trim();
   } catch (e) {
-    console.log('error', e.message);
+    console.log('error getSerial', e.message);
     return null;
   }
 };
@@ -25,7 +25,9 @@ exports.activePi = async () => {
 
     throw Error(response.body);
   } catch (e) {
-    console.log('e.message :', e.message);
+    console.log('error activePi :', e.message);
     return null;
   }
 };
+
+exports.getSerial = getSerial;

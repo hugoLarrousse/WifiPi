@@ -10,7 +10,7 @@ exports.setChmod = async () => {
     if (stderr) throw new Error(stderr);
     return;
   } catch (e) {
-    console.log('error', e.message);
+    console.log('error setChmod', e.message);
   }
 };
 
@@ -20,7 +20,7 @@ exports.copyPaste = async () => {
     if (stderr) throw new Error(stderr);
     return;
   } catch (e) {
-    console.log('error', e.message);
+    console.log('error copyPaste', e.message);
   }
 };
 
@@ -35,7 +35,7 @@ exports.addNetwork = async (ssid, password) => {
 exports.reconfigureWlan = async () => {
   const { stderr } = await exec('sudo wpa_cli -i wlan0 reconfigure');
   if (stderr) {
-    console.log(stderr);
+    console.log('error stderr reconfigureWlan', stderr);
   }
 };
 
@@ -49,7 +49,7 @@ exports.hasWpa = async () => {
     }
     return null;
   } catch (e) {
-    console.log('error', e.message);
+    console.log('error hasWpa', e.message);
     return null;
   }
 };

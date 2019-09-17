@@ -38,7 +38,7 @@ function parseOutput(str) {
       }
     });
   } catch (e) {
-    console.log('e.message :', e.message);
+    console.log('error parseOutput :', e.message);
   }
   return wifis;
 }
@@ -52,7 +52,7 @@ exports.scan = async () => {
       return parseOutput(stdout);
     }
   } catch (e) {
-    console.log('e.message :', e.message);
+    console.log('error scan :', e.message);
     return null;
   }
 };

@@ -26,9 +26,10 @@ exports.inet = async (countMax) => {
     let count = 0;
 
     do {
+      console.log('count', count);
       try {
         if (count === 0) {
-          await timeout(1000);
+          await timeout(1500);
         }
         const { stdout } = await exec('sudo ifconfig wlan0 | grep inet');
         if (stdout) {
@@ -50,19 +51,21 @@ exports.inet = async (countMax) => {
 };
 
 
-exports.internet = async (ms, maxCount) => {
+exports.internet = async (ms = 8000, maxCount = 2) => {
+  console.log('ms', ms, 'maxCount', maxCount);
   let hasResponse = false;
   let count = 0;
   do {
     try {
-      const response = await Promise.race([request({ url: 'https://api.heptaward.com/status', json: true }), timeout(ms || 8000)]);
+      const response = await Promise.race([request({ url: 'https://api.heptaward.com/status', json: true }), timeout(ms)]);
       if (response && response.body) {
         hasResponse = response.body === 'OK';
       }
     } catch (e) {
-      console.log('e.message :', e.message);
+      console.log('check internet error :', e.message);
     }
     count += 1;
-  } while (!hasResponse && count < (maxCount || 2));
+  } while (!hasResponse && count < maxCount);
+  console.log('hasResponse', hasResponse);
   return hasResponse;
 };

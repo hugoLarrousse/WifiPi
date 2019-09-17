@@ -5,16 +5,16 @@ exports.stop = async () => {
   try {
     const { stderr } = await exec('bash /home/pi/Desktop/WifiPi/conf_file/accessPoint_stop.conf');
     if (stderr) {
-      console.log('stopAcceessPoint stderr', stderr);
+      console.log('stopAccessPoint stderr', stderr);
     }
   } catch (e) {
-    console.log('stopAcceessPoint error', e.message);
+    console.log('stopAccessPoint error', e.message);
   }
 };
 
 exports.restart = async () => {
   const { stderr } = await exec('bash /home/pi/Desktop/WifiPi/conf_file/accessPoint_restart.conf');
   if (stderr) {
-    console.log(stderr);
+    console.log('restart,', stderr);
   }
 };

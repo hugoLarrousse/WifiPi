@@ -1,3 +1,6 @@
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+
 const accessPoint = require('./accesspoint');
 const supplicant = require('./supplicant');
 const check = require('./checkConnect');
@@ -6,6 +9,7 @@ const networks = require('./networks');
 const chromium = require('./chromium');
 const socket = require('../socket');
 const heptaward = require('./heptaward');
+const managePi = require('./managePi');
 
 const notifyPi = async (...messages) => {
   for (const message of messages) {
@@ -24,7 +28,7 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
   await timeout(200);
   await accessPoint.stop();
   await supplicant.reconfigureWlan();
-
+  await timeout(5000);
   const hasInet = await check.inet(8);
   if (!hasInet) {
     await accessPoint.restart();
@@ -50,6 +54,7 @@ const firstConnection = async () => {
   networks.setNetworks(await networks.scan() || []);
   if (networks.getNetworks().length === 0) {
     await accessPoint.stop();
+    await timeout(2000);
     networks.setNetworks(await networks.scan() || []);
   }
   await accessPoint.restart();
@@ -67,9 +72,9 @@ exports.initialize = async () => {
   }
 
   await accessPoint.restart();
-  await timeout(1000);
+  await timeout(2000);
   await accessPoint.stop();
-  await timeout(1000);
+  await timeout(2000);
   let hasInternet = await check.internet(25000, 2);
 
   if (!hasInternet) {
@@ -79,17 +84,22 @@ exports.initialize = async () => {
       return;
     }
     await accessPoint.stop();
+    await timeout(3000);
     hasInternet = await check.internet(18000, 2);
   }
   if (hasInternet) {
+    const serial = await heptaward.getSerial();
     const deviceId = await heptaward.activePi();
+    socket.initializeSocketH7(serial);
+    managePi.checkUpdate(serial);
     if (!deviceId) {
       await notifyPi('errorSerial');
     } else {
       chromium.launchCast(deviceId);
     }
   } else {
-    await firstConnection();
+    console.log('reboot');
+    // exec("reboot");
   }
 };
 
