@@ -64,20 +64,35 @@ const firstConnection = async () => {
 };
 
 exports.initialize = async () => {
-  let hasInternet = await check.internet(3000, 3);
-  const wpaSSID = await supplicant.hasWpa();
+  console.log('initialize');
+  let hasInternet = null;
+  let wpaSSID = null;
   chromium.launchPiDisplay();
-  if (!wpaSSID) {
-    await timeout(10000);
-    await firstConnection();
-    return;
+  const isEthernet = await check.ethernet();
+  if (isEthernet) {
+    await timeout(1000);
+    await notifyPi('checkEthernet');
+    hasInternet = await check.internet(20000, 3);
   }
   if (!hasInternet) {
-    await accessPoint.restart();
-    await timeout(2000);
-    await accessPoint.stop();
-    await timeout(2000);
-    hasInternet = await check.internet(25000, 2);
+    wpaSSID = await supplicant.hasWpa();
+    if (!wpaSSID) {
+      await timeout(10000);
+      await firstConnection();
+      return;
+    }
+  }
+  if (!hasInternet) {
+    await notifyPi('lookingForInternet2');
+    hasInternet = await check.internet(20000, 3);
+    if (!hasInternet) {
+      await notifyPi('lookingForInternet3');
+      await accessPoint.restart();
+      await timeout(2000);
+      await accessPoint.stop();
+      await timeout(2000);
+      hasInternet = await check.internet(15000, 3);
+    }
   }
 
   if (!hasInternet) {
@@ -88,6 +103,7 @@ exports.initialize = async () => {
     }
     await accessPoint.stop();
     await timeout(3000);
+    await notifyPi('lookingForInternet4');
     hasInternet = await check.internet(18000, 2);
   }
   if (hasInternet) {
@@ -101,7 +117,7 @@ exports.initialize = async () => {
       chromium.launchCast(deviceId);
     }
   } else {
-    console.log('reboot');
+    console.log('reboot, add max reboot?');
     // exec("reboot");
   }
 };
