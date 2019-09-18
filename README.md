@@ -1,5 +1,5 @@
-# WifiPi
-Chromecast-like connection for raspberry Pi
+# WifiPi V1
+Chromecast-like connection for raspberry Pi 
 
 
 ### TO DO
@@ -12,9 +12,9 @@ Chromecast-like connection for raspberry Pi
    - [X] If none of them is reachable go directly to "new connection"
 
  - **connection lost**
-   - [ ] Be able to detect when the network is lost and reconnect or reboot the pi if necessary
+   - [X] Be able to detect when the network is lost and reconnect or reboot the pi if necessary
    - [ ] Be able to detect when the main app (cast h7 for exemple) is down
 
   - **update remotely**
-    - [ ] find a way to directly update the pi remotely (ssh or socket ? )
+    - [X] find a way to directly update the pi remotely via socket
 
