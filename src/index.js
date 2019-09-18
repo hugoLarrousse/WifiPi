@@ -25,7 +25,7 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
   await supplicant.setChmod();
   await supplicant.copyPaste();
   supplicant.addNetwork(ssid, password);
-  await timeout(200);
+  await timeout(500);
   await accessPoint.stop();
   await supplicant.reconfigureWlan();
   await timeout(5000);
@@ -57,12 +57,14 @@ const firstConnection = async () => {
     await timeout(2000);
     networks.setNetworks(await networks.scan() || []);
   }
+  await timeout(1000);
   await accessPoint.restart();
   await timeout(2000);
   await notifyPi('waitingPairing');
 };
 
 exports.initialize = async () => {
+  let hasInternet = await check.internet(3, 3);
   const wpaSSID = await supplicant.hasWpa();
   chromium.launchPiDisplay();
   if (!wpaSSID) {
@@ -70,12 +72,13 @@ exports.initialize = async () => {
     await firstConnection();
     return;
   }
-
-  await accessPoint.restart();
-  await timeout(2000);
-  await accessPoint.stop();
-  await timeout(2000);
-  let hasInternet = await check.internet(25000, 2);
+  if (!hasInternet) {
+    await accessPoint.restart();
+    await timeout(2000);
+    await accessPoint.stop();
+    await timeout(2000);
+    hasInternet = await check.internet(25000, 2);
+  }
 
   if (!hasInternet) {
     const networksScanned = await networks.scan();

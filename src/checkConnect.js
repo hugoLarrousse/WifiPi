@@ -5,7 +5,7 @@ const _ = require('lodash');
 
 const timeout = require('./utils');
 
-const parseIfconfig = (str) => {
+const parseIfConfig = (str) => {
   if (str) {
     const lines = str.split('\n');
     let hasInet = false;
@@ -30,10 +30,12 @@ exports.inet = async (countMax) => {
       try {
         if (count === 0) {
           await timeout(1500);
+        } else {
+          await timeout(500);
         }
         const { stdout } = await exec('sudo ifconfig wlan0 | grep inet');
         if (stdout) {
-          inet = parseIfconfig(stdout);
+          inet = parseIfConfig(stdout);
         }
       } catch (e) {
         console.log('error checkInet', e.message);
