@@ -59,7 +59,7 @@ exports.internet = async (ms = 8000, maxCount = 2) => {
   let count = 0;
   do {
     try {
-      const response = await Promise.race([request({ url: 'https://api.heptaward.com/status', json: true }), timeout(ms)]);
+      const response = await Promise.race([request({ url: 'https://dns.google/', json: true }), timeout(ms)]);
       if (response && response.body) {
         hasResponse = response.body === 'OK';
       }
