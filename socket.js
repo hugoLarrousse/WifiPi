@@ -1,4 +1,5 @@
 const ioH7 = require('socket.io-client');
+require('dotenv').config();
 
 const { io } = require('./server');
 const timeout = require('./src/utils');

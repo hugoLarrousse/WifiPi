@@ -26,7 +26,6 @@ exports.inet = async (countMax) => {
     let count = 0;
 
     do {
-      console.log('count', count);
       try {
         if (count === 0) {
           await timeout(1500);
@@ -54,13 +53,10 @@ exports.inet = async (countMax) => {
 
 
 exports.internet = async (ms = 8000, maxCount = 2) => {
-  console.log('ms', ms, 'maxCount', maxCount);
   let hasResponse = false;
   let count = 0;
-  console.time('count1');
   do {
     try {
-      console.log('count', count);
       const response = await Promise.race([request({ url: 'https://dns.google/', json: true }), timeout(ms)]);
       if (response && response.statusCode && response.statusCode === 200) {
         hasResponse = true;
@@ -70,8 +66,6 @@ exports.internet = async (ms = 8000, maxCount = 2) => {
     }
     count += 1;
   } while (!hasResponse && count < maxCount);
-  console.timeEnd('count1');
-  console.log('hasResponse', hasResponse);
   return hasResponse;
 };
 

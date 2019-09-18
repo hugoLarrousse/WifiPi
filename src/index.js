@@ -65,9 +65,11 @@ const firstConnection = async () => {
 
 exports.initialize = async () => {
   console.log('initialize');
+  chromium.launchPiDisplay();
+  console.log('screen open');
+  await timeout(8000);
   let hasInternet = null;
   let wpaSSID = null;
-  chromium.launchPiDisplay();
   const isEthernet = await check.ethernet();
   if (isEthernet) {
     await timeout(5000);
@@ -118,7 +120,7 @@ exports.initialize = async () => {
     }
   } else {
     console.log('reboot, add max reboot?');
-    // exec("reboot");
+    exec('reboot');
   }
 };
 
