@@ -57,17 +57,25 @@ exports.internet = async (ms = 8000, maxCount = 2) => {
   console.log('ms', ms, 'maxCount', maxCount);
   let hasResponse = false;
   let count = 0;
+  console.time('count1');
   do {
     try {
+      console.log('count', count);
       const response = await Promise.race([request({ url: 'https://dns.google/', json: true }), timeout(ms)]);
-      if (response && response.body) {
-        hasResponse = response.body === 'OK';
+      if (response && response.statusCode && response.statusCode === 200) {
+        hasResponse = true;
       }
     } catch (e) {
       console.log('check internet error :', e.message);
     }
     count += 1;
   } while (!hasResponse && count < maxCount);
+  console.timeEnd('count1');
   console.log('hasResponse', hasResponse);
   return hasResponse;
+};
+
+exports.ethernet = async () => {
+  const { stdout } = await exec('cat /sys/class/net/eth0/carrier');
+  return stdout && stdout === 1;
 };

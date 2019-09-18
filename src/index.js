@@ -70,7 +70,7 @@ exports.initialize = async () => {
   chromium.launchPiDisplay();
   const isEthernet = await check.ethernet();
   if (isEthernet) {
-    await timeout(1000);
+    await timeout(5000);
     await notifyPi('checkEthernet');
     hasInternet = await check.internet(20000, 3);
   }
