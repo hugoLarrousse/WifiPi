@@ -4,9 +4,11 @@ const { io } = require('./server');
 const timeout = require('./src/utils');
 const managePi = require('./src/managePi');
 
+const { socketUrl } = process.env;
+console.log('socketUrl', socketUrl);
 
 exports.initializeSocketH7 = (serial) => {
-  const socketH7 = ioH7.connect('https://sockets.staging.heptaward.com', { secure: true, reconnect: true });
+  const socketH7 = ioH7.connect(socketUrl, { secure: true, reconnect: true });
 
   socketH7.on('connect', () => {
     setTimeout(() => {

@@ -6,6 +6,7 @@ const server = require('http').createServer(app); //eslint-disable-line
 exports.io = require('socket.io')(server);
 
 const cli = require('./src/index');
+require('dotenv').config();
 
 
 cli.initialize();
