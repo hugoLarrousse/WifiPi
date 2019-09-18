@@ -64,7 +64,7 @@ const firstConnection = async () => {
 };
 
 exports.initialize = async () => {
-  let hasInternet = await check.internet(3, 3);
+  let hasInternet = await check.internet(3000, 3);
   const wpaSSID = await supplicant.hasWpa();
   chromium.launchPiDisplay();
   if (!wpaSSID) {
