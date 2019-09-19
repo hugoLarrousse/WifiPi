@@ -58,6 +58,8 @@ const firstConnection = async () => {
     networks.setNetworks(await networks.scan() || []);
   }
   await timeout(1000);
+  await accessPoint.stop();
+  await timeout(1000);
   await accessPoint.restart();
   await timeout(2000);
   await notifyPi('waitingPairing');
