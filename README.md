@@ -18,3 +18,6 @@ Chromecast-like connection for raspberry Pi
   - **update remotely**
     - [X] find a way to directly update the pi remotely via socket
 
+  - **ethernet**
+    - [X] handle ethernet connection
+
