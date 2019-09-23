@@ -1,23 +1,23 @@
 # WifiPi V1
-Chromecast-like connection for raspberry Pi 
 
+Chromecast-like connection for raspberry Pi
 
-### TO DO
- - **the "first connection"**
-   - [X] Be able to connect from wifi or ethernet
-   - [ ] Save multiple wifi connection (only 1 is allowed for now)
+## TO DO
 
- - **the "reconnection"**
-   - [X] If one of the saved network is reachable, try to reconnect a little longer
-   - [X] If none of them is reachable go directly to "new connection"
+- **the "first connection"**
+  - [X] Be able to connect from wifi or ethernet
+  - [ ] Save multiple wifi connection (only 1 is allowed for now)
 
- - **connection lost**
-   - [X] Be able to detect when the network is lost and reconnect or reboot the pi if necessary
-   - [ ] Be able to detect when the main app (cast h7 for exemple) is down
+- **the "reconnection"**
+  - [X] If one of the saved network is reachable, try to reconnect a little longer
+  - [X] If none of them is reachable go directly to "new connection"
 
-  - **update remotely**
-    - [X] find a way to directly update the pi remotely via socket
+- **connection lost**
+  - [X] Be able to detect when the network is lost and reconnect or reboot the pi if necessary
+  - [ ] Be able to detect when the main app (cast h7 for exemple) is down
 
-  - **ethernet**
-    - [X] handle ethernet connection
+- **update remotely**
+  - [X] find a way to directly update the pi remotely via socket
 
+- **ethernet**
+  - [X] handle ethernet connection
