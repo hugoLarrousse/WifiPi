@@ -9,18 +9,17 @@ const { socketUrl } = process.env;
 console.log('socketUrl', socketUrl);
 
 exports.initializeSocketH7 = (serial) => {
-  const socketH7 = ioH7.connect(socketUrl, { secure: true, reconnect: true });
+  const socketH7 = ioH7.connect(`${socketUrl}?serial=${serial}`, { secure: false, reconnect: true });
 
   socketH7.on('connect', () => {
-    setTimeout(() => {
-      socketH7.emit('newPi', serial);
-    }, 1000);
+    console.log('connected:', socketH7.id);
   });
 
   socketH7.on('need_reboot_pi', async (serialToReboot) => {
     console.log('serial inside reboot', serial);
     if (serialToReboot === serial) {
       managePi.needReboot();
+      socketH7.disconnect();
     }
   });
 };
