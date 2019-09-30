@@ -22,6 +22,7 @@ const notifyPi = async (...messages) => {
 
 
 exports.addNetworkToConfigFile = async (ssid, password) => {
+  console.log('ssid', ssid);
   await supplicant.setChmod();
   await supplicant.copyPaste();
   supplicant.addNetwork(ssid, password);
@@ -44,6 +45,9 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
         chromium.launchCast(deviceId);
       }
     } else {
+      await timeout(1000);
+      await accessPoint.stop();
+      await timeout(2000);
       await accessPoint.restart();
       await notifyPi('errorConnection', 'waitingPairing');
     }
@@ -59,7 +63,7 @@ const firstConnection = async () => {
   }
   await timeout(1000);
   await accessPoint.stop();
-  await timeout(1000);
+  await timeout(2000);
   await accessPoint.restart();
   await timeout(2000);
   await notifyPi('waitingPairing');
@@ -73,6 +77,7 @@ exports.initialize = async () => {
   let hasInternet = null;
   let wpaSSID = null;
   const isEthernet = await check.ethernet();
+  console.log('isEthernet', isEthernet);
   if (isEthernet) {
     await timeout(5000);
     await accessPoint.stop();
@@ -82,6 +87,7 @@ exports.initialize = async () => {
   }
   if (!hasInternet) {
     wpaSSID = await supplicant.hasWpa();
+    console.log('wpaSSID', wpaSSID);
     if (!wpaSSID) {
       await timeout(10000);
       await firstConnection();
@@ -123,8 +129,7 @@ exports.initialize = async () => {
       chromium.launchCast(deviceId);
     }
   } else {
-    console.log('reboot, add max reboot?');
-    exec('reboot');
+    exec('sudo reboot');
   }
 };
 

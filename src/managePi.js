@@ -11,7 +11,7 @@ let info = require('../conf_file/version.json');
 const timeout = require('./utils');
 
 const needReboot = () => {
-  exec('reboot');
+  exec('sudo reboot');
 };
 
 const requestFactory = async (method = 'GET', url, data, ms = 10000) => Promise.race([request({
