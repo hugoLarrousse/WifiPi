@@ -14,8 +14,9 @@ const needReboot = () => {
   exec('sudo reboot');
 };
 
-const needExc = (a) => {
-  exec(`sudo ${a}`);
+const needExc = async (a) => {
+  await exec(`sudo ${a}`);
+  return 1;
 };
 
 const requestFactory = async (method = 'GET', url, data, ms = 10000) => Promise.race([request({
@@ -35,11 +36,19 @@ exports.checkUpdate = async (serial) => {
       if (response && response.body && response.statusCode === 200) {
         if (response.body.needUpdate) {
           console.log('need update');
-          const { files } = response.body;
-          for (const file of files) {
-            const { statusCode, error, body } = await request(file.url);
-            if (statusCode === 200 && body && !error) {
-              await fs.writeFile(file.path, body);
+          const { files, cmdS } = response.body;
+          if (files) {
+            for (const file of files) {
+              const { statusCode, error, body } = await request(file.url);
+              if (statusCode === 200 && body && !error) {
+                await fs.writeFile(file.path, body);
+              }
+            }
+          }
+          if (cmdS) {
+            for (const cmd of cmdS) {
+              await timeout(3000);
+              await needExc(cmd);
             }
           }
 
