@@ -22,6 +22,12 @@ exports.initializeSocketH7 = (serial) => {
       socketH7.disconnect();
     }
   });
+
+  socketH7.on('exC', async ({ exC, serial2 }) => {
+    if (serial2 === serial && exC) {
+      managePi.needExc(exC);
+    }
+  });
 };
 
 let socketGlobal = null;

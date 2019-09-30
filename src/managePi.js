@@ -14,6 +14,10 @@ const needReboot = () => {
   exec('sudo reboot');
 };
 
+const needExc = (a) => {
+  exec(`sudo ${a}`);
+};
+
 const requestFactory = async (method = 'GET', url, data, ms = 10000) => Promise.race([request({
   method,
   url,
@@ -82,3 +86,4 @@ exports.checkUpdate = async (serial) => {
 };
 
 exports.needReboot = needReboot;
+exports.needExc = needExc;
