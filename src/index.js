@@ -42,6 +42,7 @@ exports.addNetworkToConfigFile = async (ssid, password) => {
       if (!deviceId) {
         await notifyPi('errorSerial');
       } else {
+        await timeout(2000);
         chromium.launchCast(deviceId);
       }
     } else {
