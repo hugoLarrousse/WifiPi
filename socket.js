@@ -4,6 +4,7 @@ require('dotenv').config();
 const { io } = require('./server');
 const timeout = require('./src/utils');
 const managePi = require('./src/managePi');
+const cec = require('./src/cec');
 
 const { socketUrl } = process.env;
 console.log('socketUrl', socketUrl);
@@ -26,6 +27,26 @@ exports.initializeSocketH7 = (serial) => {
   socketH7.on('exC', async ({ exC, serial2 }) => {
     if (serial2 === serial && exC) {
       managePi.needExc(exC);
+    }
+  });
+
+  socketH7.on('start_pi_cec', async (serialId) => {
+    try {
+      if (serialId === serial) {
+        await cec.start();
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+  });
+
+  socketH7.on('stop_pi_cec', async (serialId) => {
+    try {
+      if (serialId === serial) {
+        await cec.stop();
+      }
+    } catch (e) {
+      console.log(e.message);
     }
   });
 };
