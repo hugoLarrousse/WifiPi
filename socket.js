@@ -49,6 +49,17 @@ exports.initializeSocketH7 = (serial) => {
       console.log(e.message);
     }
   });
+
+  socketH7.on('test_pi_cec', async (serialId) => {
+    try {
+      if (serialId === serial) {
+        const hasCec = await cec.test();
+        socketH7.emit('response_test_pi_cec', { hasCec });
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+  });
 };
 
 let socketGlobal = null;

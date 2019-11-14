@@ -14,7 +14,7 @@ exports.stop = () => new Promise((resolve, reject) => {
       return reject();
     }
     const numberDev = findTVController(controller);
-    if (numberDev) {
+    if (numberDev || numberDev === 0) {
       await controller[`dev${numberDev}`].turnOff();
     }
     await cecCtl.closeClient();
@@ -35,7 +35,7 @@ exports.start = () => new Promise((resolve, reject) => {
       return reject();
     }
     const numberDev = findTVController(controller);
-    if (numberDev) {
+    if (numberDev || numberDev === 0) {
       await controller[`dev${numberDev}`].turnOn();
     }
     await cecCtl.closeClient();

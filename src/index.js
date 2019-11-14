@@ -77,16 +77,24 @@ exports.initialize = async () => {
   await timeout(8000);
   let hasInternet = null;
   let wpaSSID = null;
+
+  // up eth0 to check ethernet
+  exec('sudo ifup eth0');
+  await timeout(2000);
   const isEthernet = await check.ethernet();
   console.log('isEthernet', isEthernet);
   if (isEthernet) {
     await timeout(5000);
     await accessPoint.stop();
+
     await timeout(2000);
     await notifyPi('checkEthernet');
     hasInternet = await check.internet(20000, 3);
   }
+
   if (!hasInternet) {
+    exec('sudo ifdown eth0');
+    await timeout(2000);
     wpaSSID = await supplicant.hasWpa();
     console.log('wpaSSID', wpaSSID);
     if (!wpaSSID) {

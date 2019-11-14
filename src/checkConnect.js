@@ -70,6 +70,6 @@ exports.internet = async (ms = 8000, maxCount = 2) => {
 };
 
 exports.ethernet = async () => {
-  const { stdout } = await exec('cat /sys/class/net/eth0/carrier');
-  return stdout && stdout === 1;
+  const { stdout } = await exec('sudo cat /sys/class/net/eth0/carrier');
+  return stdout && Number(stdout) === 1;
 };
