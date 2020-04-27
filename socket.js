@@ -13,7 +13,35 @@ exports.initializeSocketH7 = (serial) => {
   const socketH7 = ioH7.connect(`${socketUrl}?serial=${serial}`, { secure: false, reconnect: true });
 
   socketH7.on('connect', () => {
-    console.log('connected:', socketH7.id);
+    console.log('connected:', new Date(), socketH7.id);
+  });
+
+  socketH7.on('disconnect', (reason) => {
+    console.log('disconnect:', new Date(), socketH7.id, reason);
+  });
+
+  socketH7.on('reconnect', (reason) => {
+    console.log('reconnect:', new Date(), socketH7.id, reason);
+  });
+
+  socketH7.on('reconnect_attempt', (reason) => {
+    console.log('reconnect_attempt:', new Date(), socketH7.id, reason);
+  });
+
+  socketH7.on('reconnecting', (reason) => {
+    console.log('reconnecting:', new Date(), socketH7.id, reason);
+  });
+
+  socketH7.on('reconnect_failed', () => {
+    console.log('reconnect_failed:', new Date(), socketH7.id);
+  });
+
+  socketH7.on('reconnect_error', () => {
+    console.log('reconnect_error:', new Date(), socketH7.id);
+  });
+
+  socketH7.on('reconnect_attempt', () => {
+    console.log('reconnect_attempt:', new Date(), socketH7.id);
   });
 
   socketH7.on('need_reboot_pi', async (serialToReboot) => {

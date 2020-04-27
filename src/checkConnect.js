@@ -73,3 +73,22 @@ exports.ethernet = async () => {
   const { stdout } = await exec('sudo cat /sys/class/net/eth0/carrier');
   return stdout && Number(stdout) === 1;
 };
+
+exports.ping = async (ip = '8.8.8.8', count = 10, maxLoop = 10) => {
+  let currentLoop = 0;
+  let stderrGlobal = null;
+  let needTimeout = false;
+
+  do {
+    try {
+      if (needTimeout) await timeout(6000);
+      const { stderr } = await exec(`sudo ping ${ip} -c ${count}`);
+      stderrGlobal = stderr;
+      needTimeout = false;
+    } catch (e) {
+      needTimeout = true;
+      stderrGlobal = 'error';
+    }
+    currentLoop += 1;
+  } while (stderrGlobal && maxLoop !== currentLoop);
+};
