@@ -70,8 +70,12 @@ exports.internet = async (ms = 8000, maxCount = 2) => {
 };
 
 exports.ethernet = async () => {
-  const { stdout } = await exec('sudo cat /sys/class/net/eth0/carrier');
-  return stdout && Number(stdout) === 1;
+  try {
+    const { stdout } = await exec('sudo cat /sys/class/net/eth0/carrier');
+    return stdout && Number(stdout) === 1;
+  } catch (e) {
+    return false;
+  }
 };
 
 exports.ping = async (ip = '8.8.8.8', count = 10, maxLoop = 10) => {

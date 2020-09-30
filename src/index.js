@@ -88,9 +88,9 @@ exports.initialize = async () => {
     let wpaSSID = null;
 
     // up eth0 to check ethernet
-    const commandDone = await managePi.execUnsafeCommand('sudo ifup eth0');
+    await managePi.execUnsafeCommand('sudo ifup eth0');
     await timeout(2000);
-    const isEthernet = commandDone && await check.ethernet();
+    const isEthernet = await check.ethernet();
     console.log('isEthernet', isEthernet, new Date());
     if (isEthernet) {
       await timeout(5000);
